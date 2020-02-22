@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "esModuleInterop": true,
+    "module": "Commonjs",
+    "moduleResolution": "Node",
+    "noUnusedLocals": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "target": "ESNext"
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.json"
+  ]
+}

@@ -1,0 +1,26 @@
+service:
+  name: facebook-assistant-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'prod'} # Set the default stage used. Default is dev
+  region: ${opt:region, 'us-east-1'} # Overwrite the default region used. Default is us-east-1
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+
+functions:
+  health: # A Function
+    handler: dist/functions/checkHealth.handler # The file and module for this specific function
+    description: Check the service health # The description of your function.
+    events: # The Events that trigger this Function
+      - http: # This creates an API Gateway HTTP endpoint which can be used to trigger this function
+          method: get
+          path: /health
+  webhook-watson:
+    handler: dist/functions/sendWatsonWebhook.handler
+    description: description
+    events:
+      - http:
+          method: post
+          path: /webhook/watson
