@@ -18,7 +18,7 @@ functions:
           method: get
           path: /health
   webhook-watson:
-    handler: dist/functions/sendWatsonWebhook.handler
+    handler: dist/functions/sendWebhookWatson.handler
     description: description
     events:
       - http:
