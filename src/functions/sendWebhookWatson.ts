@@ -1,50 +1,69 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { v1 as uuid } from 'uuid';
+import { WatsonAssistantDb } from '../databases/watsonAssistant/watsonAssistant.db';
 import { Session } from '../databases/watsonAssistant/interfaces/session.interface';
 
 /**
  *
  * @param event
+ * @param context
+ * @param callback
  */
-export const handler: APIGatewayProxyHandler = async (event) => {
+module.exports.handler = (event, context, callback): APIGatewayProxyHandler => {
 
     if(!event.body) {
-        console.error('No body');
+        const message = 'Body required';
+        console.error('%o: %s', new Date(), message);
+        return callback(message);
     }
 
-    const body = JSON.parse(event.body);
-    let session = {};
+    context.callbackWaitsForEmptyEventLoop = false;
 
-    switch (body.method) {
-        case 'welcome':
-            session = welcome(body.localTime, body.timeZone);
-            break;
-        case 'setPersonName':
-            // Save name into the document that matches with the uuid
-            // return the document
-            break;
-        default:
-    }
+    WatsonAssistantDb.connect()
+        .then(() => {
+            const body = JSON.parse(event.body);
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(session),
-    };
+            switch (body.method) {
+                case 'welcome':
+                    return welcomeDialog(body.localTime, body.timeZone);
+                case 'setPersonName':
+                    // Save name into the document that matches with the uuid
+                    // return the document
+                    break;
+                default:
+                    return {};
+            }
+        })
+        .then((session) => {
+            return callback(null, {
+                statusCode: 200,
+                body: JSON.stringify(session),
+            });
+        })
+        .catch((err) => {
+            console.error('%o: %s', new Date(), err);
+            return callback(err);
+        });
 };
 
 /**
- * Save the uuid into a new session document
+ * Welcome Dialog
+ * Creates for the very first time the session document where all the extracted
+ * info in the current session will be stored.
+ * @param {string} localTime
+ * @param {string} timeZone
+ * @return {Promise<Session>}
  */
-const welcome = (localTime: string, timeZone: string): Session => {
+const welcomeDialog = async (localTime: string, timeZone: string): Promise<Session> => {
 
     const session: Session = {
-        uuid: uuid(),
         person: {
             localTime: localTime,
             timeZone: timeZone,
         },
         createAt: new Date(),
     };
+
+    await WatsonAssistantDb.session.insertOne(session);
 
     return session;
 };
