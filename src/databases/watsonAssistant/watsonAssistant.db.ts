@@ -7,7 +7,7 @@ import { SessionCollection } from './collections/session.collection';
  */
 export class WatsonAssistantDb {
 
-    private static readonly _default = new MongoConnection(
+    private static readonly _mongoConnection = new MongoConnection(
         'cluster0-dmiiq.mongodb.net', // TODO: env
         'sberlinches', // TODO: env
         'rcwdHkpGAj1B8EGI', // TODO: env
@@ -29,12 +29,12 @@ export class WatsonAssistantDb {
      * Connects to the database
      * @return {Promise<void>}
      */
-    public static connect(): Promise<void> {
+    public static connect(): Promise<MongoClient> {
         return new Promise((resolve, reject) => {
-            this._default.connect()
+            this._mongoConnection.connect()
                 .then((mongoClient) => {
                     this.initialize(mongoClient);
-                    resolve();
+                    resolve(mongoClient);
                 })
                 .catch(reject);
         });
@@ -44,7 +44,7 @@ export class WatsonAssistantDb {
      * Closes the database connection
      */
     public static close(): void {
-        this._default.close();
+        this._mongoConnection.close();
     }
 
     /**
