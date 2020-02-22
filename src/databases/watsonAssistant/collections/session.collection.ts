@@ -47,7 +47,7 @@ export class SessionCollection extends MongoCollection {
     /**
      * @return {Promise<Session>} — A session
      */
-    public async findById(id: ObjectID): Promise<Session> {
+    public async findOneById(id: ObjectID): Promise<Session> {
         return this._collection
             .findOne({_id: id});
     }
