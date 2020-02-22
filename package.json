@@ -22,8 +22,7 @@
   },
   "homepage": "https://github.com/sberlinches/facebook_assistant-api#readme",
   "dependencies": {
-    "mongodb": "3.5.3",
-    "uuid": "3.4.0"
+    "mongodb": "3.5.3"
   },
   "devDependencies": {
     "tslint": "6.0.0",
@@ -31,7 +30,6 @@
     "typescript": "3.8.2",
     "@types/aws-lambda": "8.10.44",
     "@types/mongodb": "3.3.16",
-    "@types/node": "12.12.6",
-    "@types/uuid": "3.4.7"
+    "@types/node": "12.12.6"
   }
 }
