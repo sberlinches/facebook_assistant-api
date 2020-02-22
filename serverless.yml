@@ -12,14 +12,14 @@ provider:
 functions:
   health: # A Function
     handler: dist/functions/checkHealth.handler # The file and module for this specific function
-    description: Check the service health # The description of your function.
+    description: Checks the service health # The description of your function.
     events: # The Events that trigger this Function
       - http: # This creates an API Gateway HTTP endpoint which can be used to trigger this function
           method: get
           path: /health
   webhook-watson:
     handler: dist/functions/sendWebhookWatson.handler
-    description: description
+    description: Receives the Watson Assistant collected information
     events:
       - http:
           method: post
