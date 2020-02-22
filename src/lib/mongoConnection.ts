@@ -1,4 +1,4 @@
-import {MongoClient, MongoClientOptions} from 'mongodb';
+import { MongoClient, MongoClientOptions } from 'mongodb';
 
 /**
  * Mongo connection
@@ -6,7 +6,6 @@ import {MongoClient, MongoClientOptions} from 'mongodb';
 export class MongoConnection {
 
   private readonly _host: string;
-  private readonly _port: number;
   private readonly _user: string;
   private readonly _password: string;
   private readonly _options: MongoClientOptions;
@@ -16,14 +15,12 @@ export class MongoConnection {
   /**
    * Creates a MongoDB connection
    * @param {string} host
-   * @param {number} port
    * @param {string} user
    * @param {string} password
    * @param {MongoClientOptions} options
    */
-  constructor(host: string, port: number, user: string, password: string, options: MongoClientOptions) {
+  constructor(host: string, user: string, password: string, options: MongoClientOptions) {
     this._host = host;
-    this._port = port;
     this._user = user;
     this._password = password;
     this._options = options;
@@ -38,7 +35,7 @@ export class MongoConnection {
   private prepareUrl(): string {
 
     const authString = (this._user) ? `${this._user}:${this._password}@` : '';
-    return `mongodb://${authString}${this._host}:${this._port}`;
+    return `mongodb+srv://${authString}${this._host}`;
   }
 
   /**
