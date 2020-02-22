@@ -44,6 +44,11 @@ export class MongoConnection {
    */
   public async connect(): Promise<MongoClient> {
 
+    if(this._client) {
+      console.log('%o: Using cached Mongo connexion: %s', new Date(), this._url);
+      return Promise.resolve(this._client);
+    }
+
     return new Promise((resolve, reject) => {
       MongoClient.connect(this._url, this._options)
         .then((client) => {
