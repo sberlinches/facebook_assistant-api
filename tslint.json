@@ -33,7 +33,8 @@
     "match-default-export-name": false,
     "prefer-readonly": true,
     "object-literal-shorthand": false,
-    "no-console": false
+    "no-console": false,
+    "whitespace": [true, "check-module"]
   },
   "rulesDirectory": []
 }
