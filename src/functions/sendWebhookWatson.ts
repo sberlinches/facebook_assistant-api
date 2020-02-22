@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { v1 as uuid } from 'uuid';
-import { Session } from '../databases/fbAssistant/interfaces/session.interface';
+import { Session } from '../databases/watsonAssistant/interfaces/session.interface';
 
 /**
  *
