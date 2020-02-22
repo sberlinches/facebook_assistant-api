@@ -1,4 +1,10 @@
-import { Collection, InsertOneWriteOpResult, MongoClient, ObjectID } from 'mongodb';
+import {
+    Collection,
+    FindAndModifyWriteOpResultObject,
+    InsertOneWriteOpResult,
+    MongoClient,
+    ObjectID,
+} from 'mongodb';
 import { MongoCollection } from '../../../lib/mongoCollection';
 import { Session } from '../interfaces/session.interface';
 
@@ -45,6 +51,7 @@ export class SessionCollection extends MongoCollection {
     }
 
     /**
+     * @param {ObjectID} id
      * @return {Promise<Session>} — A session
      */
     public async findOneById(id: ObjectID): Promise<Session> {
@@ -58,5 +65,19 @@ export class SessionCollection extends MongoCollection {
     public async insertOne(session: Session): Promise<InsertOneWriteOpResult<any>> {
         return this._collection
             .insertOne(session);
+    }
+
+    /**
+     * @param {ObjectID} id
+     * @param {string} name
+     * @return {Promise<Session>} — The modified session
+     */
+    public async setPersonNameById(id: ObjectID, name: string): Promise<FindAndModifyWriteOpResultObject<Session>> {
+        return this._collection
+            .findOneAndUpdate(
+                { _id: id },
+                { $set: { 'person.name': name }},
+                { returnOriginal: false },
+            );
     }
 }

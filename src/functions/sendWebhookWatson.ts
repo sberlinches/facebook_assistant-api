@@ -1,4 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
+import { ObjectId } from 'mongodb';
 import { WatsonAssistantDb } from '../databases/watsonAssistant/watsonAssistant.db';
 import { Session } from '../databases/watsonAssistant/interfaces/session.interface';
 
@@ -26,9 +27,7 @@ module.exports.handler = (event, context, callback): APIGatewayProxyHandler => {
                 case 'welcome':
                     return welcomeDialog(body.localTime, body.timeZone);
                 case 'setPersonName':
-                    // Save name into the document that matches with the uuid
-                    // return the document
-                    break;
+                    return setPersonName(body.id, body.name);
                 default:
                     return {};
             }
@@ -66,4 +65,18 @@ const welcomeDialog = async (localTime: string, timeZone: string): Promise<Sessi
     await WatsonAssistantDb.session.insertOne(session);
 
     return session;
+};
+
+/**
+ *
+ * @param {string} id
+ * @param {string} name
+ * @return {Promise<Session>}
+ */
+const setPersonName = async (id: string, name: string): Promise<Session> => {
+
+    const updatedSession = await WatsonAssistantDb.session
+        .setPersonNameById(new ObjectId(id), name);
+
+    return updatedSession.value;
 };
