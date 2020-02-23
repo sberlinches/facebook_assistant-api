@@ -28,9 +28,9 @@ functions:
       - http:
           method: get
           path: /sessions
-  webhook-watson:
+  send-webhook-watson:
     handler: dist/functions/sendWebhookWatson.handler
-    description: Receives the Watson Assistant collected information
+    description: Receives and handles the Watson Assistant collected information
     events:
       - http:
           method: post
