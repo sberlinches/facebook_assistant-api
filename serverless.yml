@@ -17,6 +17,24 @@ functions:
       - http: # This creates an API Gateway HTTP endpoint which can be used to trigger this function
           method: get
           path: /health
+  get-session:
+    handler: dist/functions/getSession.handler
+    description: Gets the information collected in a particular session
+    events:
+      - http:
+          method: get
+          path: /sessions/{id}
+          request:
+            parameters:
+              paths:
+                id: true
+  get-sessions:
+    handler: dist/functions/getSessions.handler
+    description: Gets a list of all sessions
+    events:
+      - http:
+          method: get
+          path: /sessions
   webhook-watson:
     handler: dist/functions/sendWebhookWatson.handler
     description: Receives the Watson Assistant collected information
