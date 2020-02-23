@@ -27,14 +27,14 @@ export class WatsonAssistantDb {
 
     /**
      * Connects to the database
-     * @return {Promise<void>}
+     * @return {Promise<any>}
      */
-    public static connect(): Promise<MongoClient> {
+    public static connect(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._mongoConnection.connect()
                 .then((mongoClient) => {
                     this.initialize(mongoClient);
-                    resolve(mongoClient);
+                    resolve(this);
                 })
                 .catch(reject);
         });
