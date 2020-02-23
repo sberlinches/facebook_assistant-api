@@ -30,8 +30,8 @@ export class WatsonAssistantController {
             let session: Session;
 
             switch (body.method) {
-                case 'welcome':
-                    session = await WatsonAssistantController.sessionInitialization(body.localTime, body.timeZone);
+                case 'initializeSession':
+                    session = await WatsonAssistantController.initializeSession(body.localTime, body.timeZone);
                     break;
                 case 'setPersonName':
                     session = await WatsonAssistantController.setPersonName(body.id, body.name);
@@ -58,7 +58,7 @@ export class WatsonAssistantController {
      * @param {string} timeZone — The timezone where the person is located
      * @return {Promise<Session>}
      */
-    private static sessionInitialization = async (localTime: string, timeZone: string): Promise<Session> => {
+    private static initializeSession = async (localTime: string, timeZone: string): Promise<Session> => {
 
         const session: Session = {
             person: {
