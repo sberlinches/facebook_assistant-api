@@ -8,7 +8,7 @@ import { WatsonAssistantDb } from '../databases/watsonAssistant/watsonAssistant.
 export class SessionController {
 
     /**
-     * Gets a list of all sessions
+     * Gets all sessions.
      * @return {Promise<APIGatewayProxyResult>}
      */
     public static getAll = async (): Promise<APIGatewayProxyResult> => {
@@ -19,19 +19,21 @@ export class SessionController {
 
             return {
                 statusCode: 200,
+                headers: {'Access-Control-Allow-Origin': '*'},
                 body: JSON.stringify(sessions),
             }
         } catch (e) {
             console.error('%o: %s', new Date(), e);
             return {
                 statusCode: 500,
+                headers: {'Access-Control-Allow-Origin': '*'},
                 body: JSON.stringify(e),
             }
         }
     };
 
     /**
-     * Gets the information collected in a particular session
+     * Gets a session.
      * @param {APIGatewayEvent} event
      * @return {Promise<APIGatewayProxyResult>}
      */
@@ -44,12 +46,14 @@ export class SessionController {
 
             return {
                 statusCode: 200,
+                headers: {'Access-Control-Allow-Origin': '*'},
                 body: JSON.stringify(session),
             }
         } catch (e) {
             console.error('%o: %s', new Date(), e);
             return {
                 statusCode: 500,
+                headers: {'Access-Control-Allow-Origin': '*'},
                 body: JSON.stringify(e),
             }
         }
