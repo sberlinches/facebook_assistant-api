@@ -36,6 +36,9 @@ export class WatsonAssistantController {
                 case 'setPersonName':
                     session = await WatsonAssistantController.setPersonName(body.id, body.name);
                     break;
+                case 'setPersonHobbies':
+                    session = await WatsonAssistantController.setPersonHobbies(body.id, body.hobbies);
+                    break;
             }
 
             return {
@@ -83,6 +86,20 @@ export class WatsonAssistantController {
 
         const updatedSession = await WatsonAssistantDb.session
             .setPersonNameById(new ObjectId(id), name);
+
+        return updatedSession.value;
+    };
+
+    /**
+     * Adds the person hobbies to the session document.
+     * @param {string} id — The session ID
+     * @param {string} hobbies — The hobbies of the person
+     * @return {Promise<Session>}
+     */
+    private static setPersonHobbies = async (id: string, hobbies: string): Promise<Session> => {
+
+        const updatedSession = await WatsonAssistantDb.session
+            .setPersonHobbiesById(new ObjectId(id), hobbies);
 
         return updatedSession.value;
     };

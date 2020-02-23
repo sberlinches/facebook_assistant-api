@@ -51,7 +51,7 @@ export class SessionCollection extends MongoCollection {
     }
 
     /**
-     * @param {ObjectID} id
+     * @param {ObjectID} id — The session ID
      * @return {Promise<Session>} — A session
      */
     public async findOneById(id: ObjectID): Promise<Session> {
@@ -68,8 +68,8 @@ export class SessionCollection extends MongoCollection {
     }
 
     /**
-     * @param {ObjectID} id
-     * @param {string} name
+     * @param {ObjectID} id — The session ID
+     * @param {string} name — The name of the person
      * @return {Promise<Session>} — The modified session
      */
     public async setPersonNameById(id: ObjectID, name: string): Promise<FindAndModifyWriteOpResultObject<Session>> {
@@ -80,4 +80,19 @@ export class SessionCollection extends MongoCollection {
                 { returnOriginal: false },
             );
     }
+
+    /**
+     * @param {ObjectID} id — The session ID
+     * @param {string} hobbies — The hobbies of the person
+     * @return {Promise<Session>} — The modified session
+     */
+    public async setPersonHobbiesById(id: ObjectID, hobbies: string):
+        Promise<FindAndModifyWriteOpResultObject<Session>> {
+            return this._collection
+                .findOneAndUpdate(
+                    { _id: id },
+                    { $addToSet: { 'person.hobbies': hobbies }},
+                    { returnOriginal: false },
+                );
+        }
 }
