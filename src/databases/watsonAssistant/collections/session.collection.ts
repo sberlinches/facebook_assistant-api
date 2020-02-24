@@ -44,9 +44,10 @@ export class SessionCollection extends MongoCollection {
     /**
      * @return {Promise<Array<Session>>} — A list of sessions
      */
-    public async findAll(): Promise<Array<Session>> {
+    public async findAll(sort: object): Promise<Array<Session>> {
         return this._collection
             .find({})
+            .sort(sort)
             .toArray();
     }
 

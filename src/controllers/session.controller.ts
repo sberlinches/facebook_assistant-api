@@ -15,7 +15,7 @@ export class SessionController {
 
         try {
             const db = await WatsonAssistantDb.connect();
-            const sessions = await db.session.findAll();
+            const sessions = await db.session.findAll({ createdAt: -1 });
 
             return {
                 statusCode: 200,
