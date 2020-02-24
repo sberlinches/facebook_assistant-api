@@ -4,5 +4,5 @@ import { Person } from './person.interface'
 export interface Session {
     _id?: ObjectID;
     person: Person;
-    createAt: Date;
+    createdAt: Date;
 }

@@ -68,7 +68,7 @@ export class WatsonAssistantController {
                 localTime: localTime,
                 timeZone: timeZone,
             },
-            createAt: new Date(),
+            createdAt: new Date(),
         };
 
         await WatsonAssistantDb.session.insertOne(session);
