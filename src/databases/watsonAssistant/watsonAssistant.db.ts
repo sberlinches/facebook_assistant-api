@@ -8,7 +8,9 @@ import { SessionCollection } from './collections/session.collection';
 export class WatsonAssistantDb {
 
     private static readonly _mongoConnection = new MongoConnection(
+        (process.env.MONGO_WA_SRV === 'true'),
         process.env.MONGO_WA_HOST,
+        parseInt(process.env.MONGO_WA_PORT),
         process.env.MONGO_WA_USER,
         process.env.MONGO_WA_PASSWORD,
         {
