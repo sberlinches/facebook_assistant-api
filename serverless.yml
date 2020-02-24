@@ -1,6 +1,9 @@
 service:
   name: facebook-assistant-api
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs12.x

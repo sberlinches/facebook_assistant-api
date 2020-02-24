@@ -8,9 +8,9 @@ import { SessionCollection } from './collections/session.collection';
 export class WatsonAssistantDb {
 
     private static readonly _mongoConnection = new MongoConnection(
-        'cluster0-dmiiq.mongodb.net', // TODO: env
-        'sberlinches', // TODO: env
-        'rcwdHkpGAj1B8EGI', // TODO: env
+        process.env.MONGO_WA_HOST,
+        process.env.MONGO_WA_USER,
+        process.env.MONGO_WA_PASSWORD,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
