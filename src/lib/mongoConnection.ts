@@ -40,7 +40,7 @@ export class MongoConnection {
    */
   private prepareConnectionString(): string {
 
-    const prefix = (this._srv) ? 'mongodb+srv' : 'mongo';
+    const prefix = (this._srv) ? 'mongodb+srv' : 'mongodb';
     const auth = (this._user) ? `${this._user}:${this._password}@` : '';
     const url = (this._srv) ? this._host : `${this._host}:${this._port}`;
 
